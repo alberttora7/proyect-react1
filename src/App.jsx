@@ -17,8 +17,12 @@ const [ data, setData ] = useState(db)
 
         <div className="row mt-5">
            
-            {data.map( ()=> (
-              <Guitar />
+            {data.map( (guitar) => (
+              <Guitar 
+                key={guitar.id}
+                guitar={guitar}
+                
+              />
             ))}
             
         </div>
