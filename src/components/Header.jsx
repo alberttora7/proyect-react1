@@ -1,6 +1,9 @@
+import { useMemo} from 'react'
+
 export default function Header({cart}) {
     //state derivado
-    const isEmpty = () => cart.length === 0
+    const isEmpty = useMemo(()=> cart.length === 0, [cart]) 
+    const cartTotal = useMemo(()=> cart.reduce( (total, item) => total + (item.quantity * item.price),0), [cart])
   return (
     ////fragmento, es un contenedor invisible, no se renderiza en el DOM, pero nos permite agrupar varios elementos sin necesidad de usar un div o cualquier otro elemento HTML
     <>
@@ -20,9 +23,10 @@ export default function Header({cart}) {
 
                         <div id="carrito" className="bg-white p-3">
                            
-                            {isEmpty()? (
+                            {isEmpty? (
                                  <p className="text-center">El carrito esta vacio</p>
                             ) : (
+                                <> 
                                     <table className="w-100 table">
                                         <thead>
                                             <tr>
@@ -52,7 +56,7 @@ export default function Header({cart}) {
                                                         >
                                                             -
                                                         </button>
-                                                            1
+                                                           {guitar.quantity}
                                                         <button
                                                             type="button"
                                                             className="btn btn-dark"
@@ -72,8 +76,11 @@ export default function Header({cart}) {
                                             ))}
                                         </tbody>
                                     </table>
+                            
+                                <p className="text-end">Total pagar: <span className="fw-bold">${cartTotal}</span></p>
+                            </>
+                            
                             )}
-                            <p className="text-end">Total pagar: <span className="fw-bold">${cart.reduce((total, guitar) => total + (guitar.price * guitar.quantity), 0)}</span></p>
                             <button className="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
                         </div>
                     </div>
